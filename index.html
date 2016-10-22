@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="jumbotron">
+    <div class="jumbotron full">
         <div class="container">
             <div class="center">
                 <h1>My friends</h1>
@@ -35,8 +35,22 @@
             </div>  
         </div>
     </div>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="app.js"></script>
+    <!----------------------------- Подключение к FireBase -->
+    <script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD90ZhwQ8nv3-13s1KO5phRTnfzqszhAek",
+            authDomain: "max-home-page.firebaseapp.com",
+            databaseURL: "https://max-home-page.firebaseio.com",
+            storageBucket: "max-home-page.appspot.com",
+            messagingSenderId: "984666710629"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-------------------------------------------------------->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
 </body>
 </html>
 <!--
