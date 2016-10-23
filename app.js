@@ -17,27 +17,28 @@ function app() {
         showFriends();
     })
     
-    function addFriend(){
+    function addFriend(){ 
         
-        var text = $("input").val().trim();
+        var inputText = $("input").val().trim();
         var element = $(this);
         
         // Если строка ввода пустая, просто выйти
-        if(text == ""){
-            $("ul").text("new")
+        if(inputText == ""){
+            //$("ul").text("new")
             return false;
         }
         
         if (element.hasClass('fa-female')){
             //debugger;
-            friends.girls.push(text);
+            friends.girls.push(inputText);
         } else {
             //debugger;
-            friends.boys.push(text);            
+            friends.boys.push(inputText);            
         }
         
+        
         // Сохраняю данные в firebase
-        database.set({friends: friends});
+        saveData()
         //showFriends();
     }
     
@@ -49,16 +50,40 @@ function app() {
         // Перерисовка массива подруг
         mama.empty();
         for(var i = 0; i < girls.length; i+=1){
-            var tmp = $("<li>"+girls[i]+"</li>")
+            var tmp = $('<li> <span class="fa fa-ban hiden" aria-hidden="true"></span> <span>'+  girls[i]+ '</span>' +"</li>");
             mama.append(tmp)
         }
         // Перерисовка массива друзей
         papa.empty()
         for(var i = 0; i < boys.length; i+=1){
-            var tmp = $("<li>"+boys[i]+"</li>")
+            var tmp = $('<li> <span class="fa fa-ban hiden" aria-hidden="true"></span> <span>'+  boys[i]+ '</span>' +"</li>");
             papa.append(tmp)
         }
+        $(".fa-ban").on("click", removeFriend)
+        $("li").on("mouseenter", function(){
+            $(this).find(".fa").removeClass("hiden")
+        })
+        $("li").on("mouseleave", function(){
+            $(this).find(".fa").addClass("hiden")
+        })
     }    
+
+    function saveData() {
+        database.set({friends: friends});        
+    }
+
+    function removeFriend() {
+        var li = $(this).parent()
+        // найти индекс нажатого <li>
+        var index = li.parent().find("li").index(li)
+        //console.log(index)
+        if(li.closest('div').hasClass("female")){
+            friends.girls.splice(index,1)
+        }else{
+            friends.boys.splice(index,1)
+        }
+        saveData();
+    }
 
     function init(){
 
@@ -81,7 +106,7 @@ function app() {
             showFriends();            
         });
     }
-    // Проверяет, наличие свойств girls и boys и если их нет, то добавляем []
+    // Проверяет наличие свойств girls и boys и если их нет, то добавляем []
     function checkFriends(){
 
         friends.girls = friends.girls ? friends.girls : [];

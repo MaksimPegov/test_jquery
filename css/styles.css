@@ -54,3 +54,16 @@ body, .full{
     border: 1px dotted #aaa;
  }
 
+ .fa-ban{
+     color: red;
+     opacity: .5;
+     font-size: 14px
+ }
+
+.fa-ban:hover{
+    opacity: 1
+}
+
+.hiden{
+    opacity: 0;
+}
