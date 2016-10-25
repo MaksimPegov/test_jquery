@@ -67,3 +67,8 @@ body, .full{
 .hiden{
     opacity: 0;
 }
+
+.hiden:hover{
+    opacity: 0;
+    cursor: default;
+}

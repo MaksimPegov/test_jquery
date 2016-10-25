@@ -43,29 +43,37 @@ function app() {
     }
     
     function showFriends() {
+        var swichState = false 
         var papa = $("div.male").find("ul");
         var mama = $("div.female").find("ul");
         var girls = friends.girls ? friends.girls : [];
         var boys = friends.boys ? friends.boys : [];
+        //проверка выключателя
+        var text = ""
+        swichState = $('input[name="my-checkbox"]').bootstrapSwitch('state');
+        if(swichState !== true){
+            text = "hiden";
+        }
+        //debugger;
         // Перерисовка массива подруг
         mama.empty();
         for(var i = 0; i < girls.length; i+=1){
-            var tmp = $('<li> <span class="fa fa-ban hiden" aria-hidden="true"></span> <span>'+  girls[i]+ '</span>' +"</li>");
+            var tmp = $('<li> <span class="fa fa-ban ' + text + '" aria-hidden="true"></span> <span>'+  girls[i]+ '</span></li>');
             mama.append(tmp)
         }
         // Перерисовка массива друзей
         papa.empty()
         for(var i = 0; i < boys.length; i+=1){
-            var tmp = $('<li> <span class="fa fa-ban hiden" aria-hidden="true"></span> <span>'+  boys[i]+ '</span>' +"</li>");
+            var tmp = $('<li> <span class="fa fa-ban ' + text + '" aria-hidden="true"></span> <span>'+  boys[i]+ '</span></li>');
             papa.append(tmp)
         }
         $(".fa-ban").on("click", removeFriend)
-        $("li").on("mouseenter", function(){
+        /*$("li").on("mouseenter", function(){
             $(this).find(".fa").removeClass("hiden")
         })
         $("li").on("mouseleave", function(){
             $(this).find(".fa").addClass("hiden")
-        })
+        })*/
     }    
 
     function saveData() {
@@ -73,6 +81,9 @@ function app() {
     }
 
     function removeFriend() {
+        if($(this).hasClass("hiden")){
+            return;
+        }
         var li = $(this).parent()
         // найти индекс нажатого <li>
         var index = li.parent().find("li").index(li)
@@ -86,6 +97,20 @@ function app() {
     }
 
     function init(){
+        //создание переключателя
+        $("[name='my-checkbox']").bootstrapSwitch();
+        //подключение оброботчика
+        $('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+            //console.log(this); // DOM element
+            //console.log(event); // jQuery event
+            //console.log(state); // true | false
+            if(state === true ){
+                $(".fa-ban").removeClass("hiden");
+            }else{
+                $(".fa-ban").addClass("hiden")
+            }
+        });
+
 
         database.once('value').then(function(data){
 
